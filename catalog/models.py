@@ -27,7 +27,7 @@ class Product(models.Model):
     manufactured_at = models.DateField(default="2024-02-17", verbose_name="Дата производства продукта")
 
     def __str__(self):
-        return f'{self.name} ({self.category})'
+        return f'{self.name}'
 
     class Meta:
         verbose_name = 'Продукт'
