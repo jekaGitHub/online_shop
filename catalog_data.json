@@ -1,0 +1,82 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Продукты",
+      "description": "Продукты питания"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Хозтовары",
+      "description": "Товары для дома"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Автотовары",
+      "description": "Товары для автомобиля"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Хлеб",
+      "description": "Из пшеничной муки высшего сорта.",
+      "image": "",
+      "category": 1,
+      "price": "52.00",
+      "created_at": "2024-02-20",
+      "updated_at": "2024-02-20",
+      "manufactured_at": "2024-02-19"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Масло моторное",
+      "description": "5w-40 4 литра",
+      "image": "",
+      "category": 3,
+      "price": "4199.99",
+      "created_at": "2024-02-20",
+      "updated_at": "2024-02-20",
+      "manufactured_at": "2023-02-17"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Масло сливочное",
+      "description": "жирность 82,5 процента",
+      "image": "",
+      "category": 1,
+      "price": "139.99",
+      "created_at": "2024-02-20",
+      "updated_at": "2024-02-20",
+      "manufactured_at": "2024-02-17"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Лопата",
+      "description": "Снеговая, широкая.",
+      "image": "",
+      "category": 2,
+      "price": "1499.99",
+      "created_at": "2024-02-20",
+      "updated_at": "2024-02-20",
+      "manufactured_at": "2022-02-17"
+    }
+  }
+]
