@@ -24,6 +24,14 @@
     }
   },
   {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Косметика",
+      "description": "Средства для тела и лица"
+    }
+  },
+  {
     "model": "catalog.product",
     "pk": 1,
     "fields": {
@@ -77,6 +85,20 @@
       "created_at": "2024-02-20",
       "updated_at": "2024-02-20",
       "manufactured_at": "2022-02-17"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "name": "Шампунь",
+      "description": "От перхоти.",
+      "image": "",
+      "category": 4,
+      "price": "332.00",
+      "created_at": "2024-02-21",
+      "updated_at": "2024-02-21",
+      "manufactured_at": "2023-02-19"
     }
   }
 ]
