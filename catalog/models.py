@@ -24,7 +24,6 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=7, verbose_name="Цена за покупку")
     created_at = models.DateField(verbose_name="Дата создания")
     updated_at = models.DateField(verbose_name="Дата последнего изменения")
-    manufactured_at = models.DateField(default="2024-02-17", verbose_name="Дата производства продукта")
 
     def __str__(self):
         return f'{self.name}'

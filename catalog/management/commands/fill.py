@@ -66,8 +66,7 @@ class Command(BaseCommand):
                         category=Category.objects.get(pk=product['fields']['category']),
                         price=product['fields']['price'],
                         created_at=product['fields']['created_at'],
-                        updated_at=product['fields']['updated_at'],
-                        manufactured_at=product['fields']['manufactured_at'])
+                        updated_at=product['fields']['updated_at'])
             )
 
         # Создаем объекты в базе с помощью метода bulk_create()
