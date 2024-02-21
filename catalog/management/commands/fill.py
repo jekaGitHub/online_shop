@@ -12,7 +12,7 @@ class Command(BaseCommand):
         # Здесь мы получаем данные из фикстуры с категориями
         categories = []
 
-        with open("../catalog_data.json", 'r') as f:
+        with open("catalog_data.json", 'r') as f:
             data = json.load(f)
 
         for item in data:
@@ -26,7 +26,7 @@ class Command(BaseCommand):
         # Здесь мы получаем данные из фикстуры с продуктами
         products = []
 
-        with open("../catalog_data.json", 'r') as f:
+        with open("catalog_data.json", 'r') as f:
             data = json.load(f)
 
         for item in data:
