@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Product
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, TemplateView
 
 
 # Create your views here.
@@ -9,8 +9,16 @@ class CatalogListView(ListView):
     model = Product
 
 
+class CatalogDetailView(DetailView):
+    model = Product
+
+
+class ContactTemplateView(TemplateView):
+    template_name = "catalog/contact.html"
+
+
 def home(request):
-    products = Product.objects.all()[:3]
+    products = Product.objects.all()[:5]
     сontext = {
         "object_list": products
     }
@@ -24,11 +32,3 @@ def contact(request):
         message = request.POST.get('message')
         print(f'Вы отправили новое сообщение от {name}({phone}): {message}')
     return render(request, 'catalog/contact.html')
-
-
-def single_product(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {
-        "object": product
-    }
-    return render(request, 'catalog/page_product.html', context)
