@@ -38,7 +38,7 @@ def contact(request):
 class ArticleCreateView(CreateView):
     model = Article
     fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
-    success_url = reverse_lazy('catalog:index')
+    success_url = reverse_lazy('catalog:list')
 
 
 class ArticleListView(ListView):
