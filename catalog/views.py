@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 
-from catalog.models import Product
-from django.views.generic import ListView, DetailView, TemplateView
+from catalog.models import Product, Article
+from django.views.generic import CreateView, ListView, DetailView, TemplateView
 
 
 # Create your views here.
@@ -32,3 +33,13 @@ def contact(request):
         message = request.POST.get('message')
         print(f'Вы отправили новое сообщение от {name}({phone}): {message}')
     return render(request, 'catalog/contact.html')
+
+
+class ArticleCreateView(CreateView):
+    model = Article
+    fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
+    success_url = reverse_lazy('catalog:index')
+
+
+class ArticleListView(ListView):
+    model = Article
