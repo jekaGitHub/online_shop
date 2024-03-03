@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
+from pytils.translit import slugify
 
 from catalog.models import Product, Article
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
@@ -40,6 +41,14 @@ class ArticleCreateView(CreateView):
     fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
     success_url = reverse_lazy('catalog:list')
 
+    def form_valid(self, form):
+        if form.is_valid():
+            new_article = form.save()
+            new_article.slug = slugify(new_article.title)
+            new_article.save()
+
+        return super().form_valid(form)
+
 
 class ArticleListView(ListView):
     model = Article
@@ -59,10 +68,22 @@ class ArticleDetailView(DetailView):
         self.object.save()
         return self.object
 
+
 class ArticleUpdateView(UpdateView):
     model = Article
     fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
     success_url = reverse_lazy('catalog:list')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_article = form.save()
+            new_article.slug = slugify(new_article.title)
+            new_article.save()
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('catalog:view', args=[self.kwargs.get('pk')])
 
 
 class ArticleDeleteView(DeleteView):
