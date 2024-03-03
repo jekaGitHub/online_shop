@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 
 from catalog.models import Product, Article
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, TemplateView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
 
 
 # Create your views here.
@@ -52,4 +52,9 @@ class ArticleDetailView(DetailView):
 class ArticleUpdateView(UpdateView):
     model = Article
     fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
+    success_url = reverse_lazy('catalog:list')
+
+
+class ArticleDeleteView(DeleteView):
+    model = Article
     success_url = reverse_lazy('catalog:list')
