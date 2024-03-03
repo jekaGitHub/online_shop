@@ -43,3 +43,6 @@ class ArticleCreateView(CreateView):
 
 class ArticleListView(ListView):
     model = Article
+
+class ArticleDetailView(DetailView):
+    model = Article
