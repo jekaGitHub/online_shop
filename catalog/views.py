@@ -1,11 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Product
+from django.views.generic import ListView
 
 
 # Create your views here.
+class CatalogListView(ListView):
+    model = Product
+
+
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.all()[:3]
     сontext = {
         "object_list": products
     }
