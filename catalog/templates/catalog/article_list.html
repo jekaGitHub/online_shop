@@ -3,12 +3,12 @@
 {% load my_tags %}
 
 <div class="row text-center">
+    <a href="{% url 'catalog:create' %}">
+        <button type="button" class="btn btn-sm btn-outline-primary">Добавить статью</button>
+    </a>
     {% for object in object_list %}
     <div class="col-3">
         <div class="card mb-4 box-shadow">
-            <a href="{% url 'catalog:create' %}">
-                Добавить статью
-            </a>
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal">{{ object.title }}</h4>
             </div>
