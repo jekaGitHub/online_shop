@@ -42,7 +42,7 @@ class ContactView(View):
 
 class ArticleCreateView(CreateView):
     model = Article
-    fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
+    fields = ('title', 'description', 'image', 'created_at', 'is_published',)
     success_url = reverse_lazy('catalog:list')
 
     def form_valid(self, form):
@@ -75,7 +75,7 @@ class ArticleDetailView(DetailView):
 
 class ArticleUpdateView(UpdateView):
     model = Article
-    fields = ('title', 'description', 'created_at', 'is_published', 'views_count',)
+    fields = ('title', 'description', 'image', 'created_at', 'is_published',)
     success_url = reverse_lazy('catalog:list')
 
     def form_valid(self, form):
