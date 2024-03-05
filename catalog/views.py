@@ -3,7 +3,7 @@ from django.urls import reverse, reverse_lazy
 from pytils.translit import slugify
 
 from catalog.models import Product, Article
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
+from django.views.generic import View, CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
 
 
 # Create your views here.
@@ -27,13 +27,17 @@ class HomeListView(ListView):
     def get_queryset(self):
         return Product.objects.all()[:5]
 
-# def contact(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         phone = request.POST.get('phone')
-#         message = request.POST.get('message')
-#         print(f'Вы отправили новое сообщение от {name}({phone}): {message}')
-#     return render(request, 'catalog/contact.html')
+
+class ContactView(View):
+    def post(self, request):
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+        print(f'Вы отправили новое сообщение от {name}({phone}): {message}')
+        return render(request, 'catalog/contact.html')
+
+    def get(self, request):
+        return render(request, 'catalog/contact.html')
 
 
 class ArticleCreateView(CreateView):
