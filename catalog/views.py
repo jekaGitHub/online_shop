@@ -19,13 +19,13 @@ class ContactTemplateView(TemplateView):
     template_name = "catalog/contact.html"
 
 
-def home(request):
-    products = Product.objects.all()[:5]
-    сontext = {
-        "object_list": products
-    }
-    return render(request, 'catalog/index.html', сontext)
+class HomeListView(ListView):
+    model = Product
+    template_name = 'catalog/index.html'
+    context_object_name = 'object_list'
 
+    def get_queryset(self):
+        return Product.objects.all()[:5]
 
 # def contact(request):
 #     if request.method == 'POST':
