@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from pytils.translit import slugify
+from django.forms import inlineformset_factory
 
-from catalog.forms import ProductForm
-from catalog.models import Product, Article
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, Article, Version
 from django.views.generic import View, CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
 
 
