@@ -24,5 +24,5 @@ class ArticleAdmin(admin.ModelAdmin):
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):
     list_display = ("id", "number_version", "name_version", "is_active_version", "product")
-    list_filter = ("is_published", "product")
+    list_filter = ("is_active_version", "product")
     search_fields = ("number_version",)
