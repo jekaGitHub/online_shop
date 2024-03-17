@@ -9,7 +9,7 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
 
     def clean_name(self):
-        cleaned_data = self.cleaned_data['name']
+        cleaned_data = self.cleaned_data['name'].lower()
 
         if cleaned_data in ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар'):
             raise forms.ValidationError('Название содержит запрещённые слова')
