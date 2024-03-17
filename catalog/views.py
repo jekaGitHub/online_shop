@@ -64,12 +64,13 @@ class ProductUpdateView(UpdateView):
 
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
-        self.object = form.save()
-        if formset.is_valid():
+        if form.is_valid() and formset.is_valid():
+            self.object = form.save()
             formset.instance = self.object
             formset.save()
-
-        return super().form_valid(form)
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
 class ArticleCreateView(CreateView):
