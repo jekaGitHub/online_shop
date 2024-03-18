@@ -19,16 +19,16 @@ class ProductForm(StyleFromMixin, forms.ModelForm):
         fields = '__all__'
 
     def clean_name(self):
-        cleaned_data = self.cleaned_data['name'].lower()
+        cleaned_data = self.cleaned_data['name']
 
-        if cleaned_data in ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар'):
+        if cleaned_data.lower() in ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар'):
             raise forms.ValidationError('Название содержит запрещённые слова')
         return cleaned_data
 
     def clean_description(self):
         cleaned_data = self.cleaned_data['description']
 
-        if cleaned_data in ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар'):
+        if cleaned_data.lower() in ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар'):
             raise forms.ValidationError('Описание содержит запрещённые слова')
         return cleaned_data
 
