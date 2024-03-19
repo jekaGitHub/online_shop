@@ -12,6 +12,12 @@ from django.views.generic import View, CreateView, ListView, DetailView, UpdateV
 class CatalogListView(ListView):
     model = Product
 
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        for product in context_data.get('object_list'):
+            product.version = product.version_set.filter(is_active_version=True).first()
+        return context_data
+
 
 class CatalogDetailView(DetailView):
     model = Product
