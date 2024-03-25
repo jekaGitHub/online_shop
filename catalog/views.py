@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from pytils.translit import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import View, CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
+from pytils.translit import slugify
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Article, Version
-from django.views.generic import View, CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
 
 
 # Create your views here.
@@ -48,10 +49,16 @@ class ContactView(View):
         return render(request, 'catalog/contact.html')
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.owner = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):
