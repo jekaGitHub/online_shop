@@ -2,17 +2,18 @@ import secrets
 
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
-from django.views.generic import CreateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, UpdateView
 
 from config import settings
-from users.forms import RegistrationForm
+from users.forms import RegistrationForm, UserForm
 from users.models import User
 
 
 class RegisterView(CreateView):
     model = User
     form_class = RegistrationForm
+    template_name = "users/register.html"
 
     def get_success_url(self):
         return reverse('users:login')
@@ -35,3 +36,12 @@ def verify(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse("users:login"))
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    success_url = reverse_lazy('users:profile')
+    form_class = UserForm
+
+    def get_object(self, queryset=None):
+        return self.request.user
