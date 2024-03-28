@@ -55,7 +55,7 @@ def restore_password(request):
         subject='Восстановление пароля',
         message=f'Ваш новый пароль: {new_password}',
         from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[request.user.email]
+        recipient_list=[request.POST.get('email')]
     )
     request.user.set_password(make_password(new_password))
     request.user.save()
