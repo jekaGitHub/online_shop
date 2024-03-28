@@ -12,6 +12,7 @@ pillow = "^10.2.0"
 ipython = "^8.21.0"
 pytils = "^0.4.1"
 django = "4.2.2"
+certifi = "^2024.2.2"
 
 
 [build-system]
