@@ -73,16 +73,3 @@ class ResetPasswordView(PasswordResetView):
             fail_silently=False,
         )
         return super().form_valid(form)
-
-
-def restore_password(request):
-    new_password = ''.join([str(random.randint(0, 9)) for _ in range(12)])
-    send_mail(
-        subject='Восстановление пароля',
-        message=f'Ваш новый пароль: {new_password}',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[request.POST.get('email')]
-    )
-    request.user.set_password(make_password(new_password))
-    request.user.save()
-    return redirect(reverse('catalog:home'))
