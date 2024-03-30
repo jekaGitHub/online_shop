@@ -2,13 +2,14 @@ import random
 import secrets
 
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import PasswordResetView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
 from config import settings
-from users.forms import RegistrationForm, UserForm
+from users.forms import RegistrationForm, UserForm, ResetPasswordForm
 from users.models import User
 
 
@@ -47,6 +48,31 @@ class UserUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class ResetPasswordView(PasswordResetView):
+    form_class = ResetPasswordForm
+    template_name = 'users/reset_password.html'
+
+    def get_success_url(self):
+        return reverse('users:login')
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        user = User.objects.get(email=email)
+
+        password = ''.join([str(random.randint(0, 9)) for _ in range(8)])
+        user.password = make_password(password)
+        user.save()
+        message = f"Ваш новый пароль: {password}"
+        send_mail(
+            subject="Смена пароля",
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user.email],
+            fail_silently=False,
+        )
+        return super().form_valid(form)
 
 
 def restore_password(request):
