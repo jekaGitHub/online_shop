@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import View, CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
 from pytils.translit import slugify
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Article, Version
 
 
@@ -20,7 +21,7 @@ class CatalogListView(ListView):
         return context_data
 
 
-class CatalogDetailView(DetailView):
+class ProductDetailView(DetailView):
     model = Product
 
 
@@ -61,7 +62,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
@@ -75,6 +76,12 @@ class ProductUpdateView(UpdateView):
             context_data['formset'] = VersionFormset(instance=self.object)
         return context_data
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.request.user == self.object.owner:
+            return self.object
+        raise HttpResponseForbidden
+
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
         if form.is_valid() and formset.is_valid():
@@ -84,6 +91,14 @@ class ProductUpdateView(UpdateView):
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.has_perm('catalog.change_product_description') \
+                and user.has_perm('catalog.change_product_category') \
+                and user.has_perm('catalog.change_product_is_published'):
+            return ProductModeratorForm
+        return ProductForm
 
 
 class ArticleCreateView(CreateView):
