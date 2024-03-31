@@ -26,9 +26,11 @@
                 <a href="{% url 'catalog:product_detail' object.pk %}">
                     <button type="button" class="btn btn-sm btn-outline-secondary">Подробнее</button>
                 </a>
+                {% if perms.catalog.change_product_description and perms.catalog.change_product_category and perms.catalog.change_product_is_published or user == object.owner %}
                 <a href="{% url 'catalog:product_update' object.pk %}">
                     <button type="button" class="btn btn-sm btn-outline-secondary">Редактировать</button>
                 </a>
+                {% endif %}
                 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
             </div>
         </div>
