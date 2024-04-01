@@ -51,6 +51,7 @@ class UserUpdateView(UpdateView):
 
 
 class ResetPasswordView(PasswordResetView):
+    email_template_name = 'users/reset_password.html'
     form_class = ResetPasswordForm
     template_name = 'users/reset_password.html'
 
