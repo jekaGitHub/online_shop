@@ -8,11 +8,15 @@ from pytils.translit import slugify
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Article, Version
+from catalog.services import get_products_from_cache
 
 
 # Create your views here.
 class CatalogListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(**kwargs)
